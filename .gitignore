@@ -1,0 +1,51 @@
+# Arquivos gerados pelo Eclipse
+.classpath
+.project
+.settings/
+
+
+# Arquivos gerados pelo IntelliJ
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Logs
+/log/
+
+# Cache do Maven
+/.mvn/
+
+# Arquivos de configuração do Maven
+target/
+
+# Dependências do Maven
+lib/
+
+# Arquivos de configuração do Gradle
+.gradle/
+/build/
+
+# Arquivos de configuração do Spring Boot
+spring-boot-starter-parent.iml
+
+# Arquivos de configuração do Eclipse
+.classpath
+.project
+.settings/
+
+# Arquivos de configuração do IntelliJ
+*.iml
+*.ipr
+*.iws
+.idea/
+
+# Arquivos de configuração do NetBeans
+/nbproject/private/
+/nbproject/Makefile-*.mk
+/nbproject/Package-*.bash
+/nbproject/project.xml
+/nbproject/properties/
+
+# Arquivos de configuração do VS Code
+.vscode/

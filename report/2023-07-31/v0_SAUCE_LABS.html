@@ -1,0 +1,915 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<title>SAUCE LABS</title>
+<link rel="apple-touch-icon" href="https://cdn.jsdelivr.net/gh/extent-framework/extent-github-cdn@b00a2d0486596e73dd7326beacf352c639623a0e/commons/img/logo.png">
+<link rel="shortcut icon" href="https://cdn.jsdelivr.net/gh/extent-framework/extent-github-cdn@b00a2d0486596e73dd7326beacf352c639623a0e/commons/img/logo.png">
+<link href="https://cdn.jsdelivr.net/gh/extent-framework/extent-github-cdn@d6562a79075e061305ccfdb82f01e5e195e2d307/spark/css/spark-style.css" rel="stylesheet" />
+<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/gh/extent-framework/extent-github-cdn@7cc78ce/spark/js/jsontree.js"></script>
+<style type="text/css">.test-wrapper .test-list{ width: 25%;}.test-wrapper .test-content{ width: 75%;}table.markup-table tbody tr td { border: 1px solid #495057;}span.badge.white-text { font-size: 16px;}table.markup-table tbody tr td:nth-child(1){ min-width: 200px;}table.markup-table tbody tr td:nth-child(2){ min-width: 200px;}table.markup-table tbody tr td:nth-child(3){ min-width: 200px;}table.markup-table tbody tr td:nth-child(4){ min-width: 200px;}table.markup-table tbody tr td:nth-child(5){ min-width: 130px;}</style></head><body class="spa -report dark">
+  <div class="app">
+    <div class="layout">
+<div class="header navbar">
+<div class="vheader">
+<div class="nav-logo">
+<a href="#">
+<div class="logo" style="background-image: url('https://cdn.jsdelivr.net/gh/extent-framework/extent-github-cdn@b00a2d0486596e73dd7326beacf352c639623a0e/commons/img/logo.png')"></div>
+</a>
+</div>
+<ul class="nav-left">
+<li class="search-box">
+<a class="search-toggle" href="#">
+<i class="search-icon fa fa-search"></i>
+<i class="search-icon-close fa fa-close"></i>
+</a>
+</li>
+<li class="search-input"><input id="search-tests" class="form-control" type="text" placeholder="Search..."></li>
+</ul>
+<ul class="nav-right">
+<li class="m-r-10">
+<a href="#"><span class="badge badge-primary">Teste</span></a>
+</li>
+<li class="m-r-10">
+<a href="#"><span class="badge badge-primary">31/07/2023 23:10:47</span></a>
+</li>
+</ul>
+</div>
+</div><div class="side-nav">
+<div class="side-nav-inner">
+<ul class="side-nav-menu">
+<li class="nav-item dropdown" onclick="toggleView('dashboard-view')">
+<a id="nav-dashboard" class="dropdown-toggle" href="#">
+<span class="ico"><i class="fa fa-bar-chart"></i></span>
+</a>
+</li>
+<li class="nav-item dropdown" onclick="toggleView('test-view')">
+<a id="nav-test" class="dropdown-toggle" href="#">
+<span class="ico"><i class="fa fa-list"></i></span>
+</a>
+</li>
+</ul>
+</div>
+</div>      <div class="vcontainer">
+        <div class="main-content">
+<div class="container-fluid p-4 view dashboard-view">
+<div class="row">
+<div class="col-md-3">
+<div class="card"><div class="card-body">
+<p class="m-b-0">Started</p>
+<h3>31/07/2023 23:10:47</h3>
+</div></div>
+</div>
+<div class="col-md-3">
+<div class="card"><div class="card-body">
+<p class="m-b-0">Ended</p>
+<h3>31/07/2023 23:12:00</h3>
+</div></div>
+</div>
+<div class="col-md-3">
+<div class="card"><div class="card-body">
+<p class="m-b-0 text-pass">Tests Passed</p>
+<h3>9</h3>
+</div></div>
+</div>
+<div class="col-md-3">
+<div class="card"><div class="card-body">
+<p class="m-b-0 text-fail">Tests Failed</p>
+<h3>0</h3>
+</div></div>
+</div>
+</div>
+<div class="row">
+<div class="col-md-6">
+<div class="card">
+<div class="card-header">
+<h6 class="card-title">Tests</h6>
+</div>
+<div class="card-body">
+<div class="">
+<canvas id='parent-analysis' width='115' height='90'></canvas>
+</div>
+</div>
+<div class="card-footer">
+<div><small data-tooltip='100%'>
+<b>9</b> tests passed
+</small>
+</div>
+<div>
+<small data-tooltip='0%'><b>0</b> tests failed,
+<b>0</b> skipped, <b data-tooltip='0%'>0</b> others
+</small>
+</div>
+</div>
+</div>
+</div>
+<div class="col-md-6">
+<div class="card">
+<div class="card-header">
+<h6 class="card-title">Log events</h6>
+</div>
+<div class="card-body">
+<div class="">
+<canvas id='events-analysis' width='115' height='90'></canvas>
+</div>
+</div>
+<div class="card-footer">
+<div><small data-tooltip='15%'><b>9</b> events passed</small></div>
+<div>
+<small data-tooltip='0%'><b>0</b> events failed,
+<b data-tooltip='%'>50</b> others
+</small>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="row"><div class="col-md-12">
+<div class="card"><div class="card-header"><p>Timeline</p></div>
+<div class="card-body pt-0"><div>
+<canvas id="timeline" height="120"></canvas>
+</div></div>
+</div>
+</div></div>
+<script>
+var timeline = {
+"CT01 - Login com credenciais válidas usando tarefa inputText":13.052,"CT02 - Login com credenciais válidas com a task Login":6.996,"CT03 - Tentar logar com credenciais inválidas":5.085,"CT04 - Tentar logar sem informar as credenciais":3.363,"CT05 - Limpar notificações":8.232,"CT01 - Verificar o preço do primeiro produto":10.918,"CT02 - Adicionar produto no carrinho Arrastando e Soltando":7.899,"CT03 - Adicionar produto no carrinho clicando no botão":6.684,"CT04 - Scrollar até o produto Sauce Labs Onesie estar visível":9.866
+};
+</script>
+<div class="row">
+</div>
+</div>
+<script>
+var statusGroup = {
+parentCount: 5,
+passParent: 9,
+failParent: 0,
+warningParent: 0,
+skipParent: 0,
+childCount: 5,
+passChild: 0,
+failChild: 0,
+warningChild: 0,
+skipChild: 0,
+infoChild: 0,
+grandChildCount: 5,
+passGrandChild: 0,
+failGrandChild: 0,
+warningGrandChild: 0,
+skipGrandChild: 0,
+infoGrandChild: 0,
+eventsCount: 5,
+passEvents: 9,
+failEvents: 0,
+warningEvents: 0,
+skipEvents: 0,
+infoEvents: 50
+};
+</script><div class="test-wrapper row view test-view">
+  <div class="test-list">
+    <div class="test-list-tools">
+<ul class="tools pull-left">
+<li><a href="#"><span class="font-size-14">Tests</span></a></li>
+</ul>
+<ul class="tools text-right">
+<li class="dropdown">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-exclamation-circle"></i></a>
+<ul id="status-toggle" class="dropdown-menu dropdown-md p-v-0">
+<a class="dropdown-item" status="pass" href="#"><span>Pass</span><span class="status success"></span></a>
+<div class="dropdown-divider"></div>
+<a status="clear" class="dropdown-item" href="#"><span>Clear</span><span class="pull-right"><i class="fa fa-close"></i></span></a>
+</ul>
+</li>
+</ul>
+</div>    <div class="test-list-wrapper scrollable">
+      <ul class="test-list-item">
+        <li class="test-item"  status="pass" test-id="1"
+          author=""
+          tag=""
+          device="">
+          <div class="test-detail">
+            <p class="name">CT01 - Login com credenciais válidas usando tarefa inputText</p>
+            <p class="text-sm">
+              <span>23:10:47</span> / <span>00:00:13:052</span>
+              <span class="badge pass-bg log float-right">Pass</span>
+            </p>
+          </div>
+          <div class="test-contents d-none">
+<div class="detail-head">
+<div class="p-v-10">
+<div class="info">
+<h5 class="test-status text-pass">CT01 - Login com credenciais válidas usando tarefa inputText</h5>
+<span class='badge badge-success'>07.31.2023 23:10:47</span>
+<span class='badge badge-danger'>07.31.2023 23:11:00</span>
+<span class='badge badge-default'>00:00:13:052</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=1</span>
+<span class='badge badge-default pointer float-right ml-1 et'><i class="fa fa-chevron-down"></i></span>
+<span class='badge badge-default pointer float-right ct'><i class="fa fa-chevron-up"></i></span>
+</div>
+</div>
+</div><div class="detail-body mt-4">
+<table class="table table-sm">
+  <thead><tr><th class="status-col">Status</th><th class="timestamp-col">Timestamp</th><th class="details-col">Details</th></tr></thead>
+  <tbody>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:10:52</td>
+        <td>
+          ABILITY - Cleo acquired the ability to navigate on mobile device Android
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:10:54</td>
+        <td>
+          TASK - Cleo typed standard_user in element Username
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:10:55</td>
+        <td>
+          TASK - Cleo typed secret_sauce in element Password
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:10:56</td>
+        <td>
+          TASK - Cleo clicked on the element Login
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:10:57</td>
+        <td>
+          QUESTION - Cleo verified that element Product Title Label is visible
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>23:10:57</td>
+        <td>
+          <span class='badge white-text green'>All assertions are passed. 😊😊😊😊😊</span>
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:00</td>
+        <td>
+          <video width="640" height="360" controls><source src="D:\Cléo\Documents\Java\saucelabs\report\videos\2023-07-31\LoginPageTest\v1\CT01 - Login com credenciais válidas usando tarefa inputText.mp4" type="video/mp4"></video>
+        </td>
+      </tr>
+  </tbody>
+</table>
+</div>
+          </div>
+        </li>
+        <li class="test-item"  status="pass" test-id="2"
+          author=""
+          tag=""
+          device="">
+          <div class="test-detail">
+            <p class="name">CT02 - Login com credenciais válidas com a task Login</p>
+            <p class="text-sm">
+              <span>23:11:00</span> / <span>00:00:06:996</span>
+              <span class="badge pass-bg log float-right">Pass</span>
+            </p>
+          </div>
+          <div class="test-contents d-none">
+<div class="detail-head">
+<div class="p-v-10">
+<div class="info">
+<h5 class="test-status text-pass">CT02 - Login com credenciais válidas com a task Login</h5>
+<span class='badge badge-success'>07.31.2023 23:11:00</span>
+<span class='badge badge-danger'>07.31.2023 23:11:07</span>
+<span class='badge badge-default'>00:00:06:996</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=2</span>
+<span class='badge badge-default pointer float-right ml-1 et'><i class="fa fa-chevron-down"></i></span>
+<span class='badge badge-default pointer float-right ct'><i class="fa fa-chevron-up"></i></span>
+</div>
+</div>
+</div><div class="detail-body mt-4">
+<table class="table table-sm">
+  <thead><tr><th class="status-col">Status</th><th class="timestamp-col">Timestamp</th><th class="details-col">Details</th></tr></thead>
+  <tbody>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:00</td>
+        <td>
+          ABILITY - Cleo acquired the ability to navigate on mobile device Android
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:02</td>
+        <td>
+          TASK - Cleo typed standard_user in element Username
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:03</td>
+        <td>
+          TASK - Cleo typed secret_sauce in element Password
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:04</td>
+        <td>
+          TASK - Cleo clicked on the element Login
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:05</td>
+        <td>
+          QUESTION - Cleo verified that element Product Title Label is visible
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>23:11:05</td>
+        <td>
+          <span class='badge white-text green'>All assertions are passed. 😊😊😊😊😊</span>
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:07</td>
+        <td>
+          <video width="640" height="360" controls><source src="D:\Cléo\Documents\Java\saucelabs\report\videos\2023-07-31\LoginPageTest\v1\CT02 - Login com credenciais válidas com a task Login.mp4" type="video/mp4"></video>
+        </td>
+      </tr>
+  </tbody>
+</table>
+</div>
+          </div>
+        </li>
+        <li class="test-item"  status="pass" test-id="3"
+          author=""
+          tag=""
+          device="">
+          <div class="test-detail">
+            <p class="name">CT03 - Tentar logar com credenciais inválidas</p>
+            <p class="text-sm">
+              <span>23:11:07</span> / <span>00:00:05:085</span>
+              <span class="badge pass-bg log float-right">Pass</span>
+            </p>
+          </div>
+          <div class="test-contents d-none">
+<div class="detail-head">
+<div class="p-v-10">
+<div class="info">
+<h5 class="test-status text-pass">CT03 - Tentar logar com credenciais inválidas</h5>
+<span class='badge badge-success'>07.31.2023 23:11:07</span>
+<span class='badge badge-danger'>07.31.2023 23:11:12</span>
+<span class='badge badge-default'>00:00:05:085</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=3</span>
+<span class='badge badge-default pointer float-right ml-1 et'><i class="fa fa-chevron-down"></i></span>
+<span class='badge badge-default pointer float-right ct'><i class="fa fa-chevron-up"></i></span>
+</div>
+</div>
+</div><div class="detail-body mt-4">
+<table class="table table-sm">
+  <thead><tr><th class="status-col">Status</th><th class="timestamp-col">Timestamp</th><th class="details-col">Details</th></tr></thead>
+  <tbody>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:07</td>
+        <td>
+          ABILITY - Cleo acquired the ability to navigate on mobile device Android
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:08</td>
+        <td>
+          TASK - Cleo typed aaa in element Username
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:09</td>
+        <td>
+          TASK - Cleo typed secret_sauce in element Password
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:10</td>
+        <td>
+          TASK - Cleo clicked on the element Login
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:11</td>
+        <td>
+          QUESTION - Cleo verified that element Error Message is visible
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>23:11:11</td>
+        <td>
+          <span class='badge white-text green'>All assertions are passed. 😊😊😊😊😊</span>
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:12</td>
+        <td>
+          <video width="640" height="360" controls><source src="D:\Cléo\Documents\Java\saucelabs\report\videos\2023-07-31\LoginPageTest\v1\CT03 - Tentar logar com credenciais inválidas.mp4" type="video/mp4"></video>
+        </td>
+      </tr>
+  </tbody>
+</table>
+</div>
+          </div>
+        </li>
+        <li class="test-item"  status="pass" test-id="4"
+          author=""
+          tag=""
+          device="">
+          <div class="test-detail">
+            <p class="name">CT04 - Tentar logar sem informar as credenciais</p>
+            <p class="text-sm">
+              <span>23:11:12</span> / <span>00:00:03:363</span>
+              <span class="badge pass-bg log float-right">Pass</span>
+            </p>
+          </div>
+          <div class="test-contents d-none">
+<div class="detail-head">
+<div class="p-v-10">
+<div class="info">
+<h5 class="test-status text-pass">CT04 - Tentar logar sem informar as credenciais</h5>
+<span class='badge badge-success'>07.31.2023 23:11:12</span>
+<span class='badge badge-danger'>07.31.2023 23:11:15</span>
+<span class='badge badge-default'>00:00:03:363</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=4</span>
+<span class='badge badge-default pointer float-right ml-1 et'><i class="fa fa-chevron-down"></i></span>
+<span class='badge badge-default pointer float-right ct'><i class="fa fa-chevron-up"></i></span>
+</div>
+</div>
+</div><div class="detail-body mt-4">
+<table class="table table-sm">
+  <thead><tr><th class="status-col">Status</th><th class="timestamp-col">Timestamp</th><th class="details-col">Details</th></tr></thead>
+  <tbody>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:12</td>
+        <td>
+          ABILITY - Cleo acquired the ability to navigate on mobile device Android
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:13</td>
+        <td>
+          TASK - Cleo clicked on the element Login
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:14</td>
+        <td>
+          QUESTION - Cleo verified that element Error Message is visible
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>23:11:14</td>
+        <td>
+          <span class='badge white-text green'>All assertions are passed. 😊😊😊😊😊</span>
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:15</td>
+        <td>
+          <video width="640" height="360" controls><source src="D:\Cléo\Documents\Java\saucelabs\report\videos\2023-07-31\LoginPageTest\v1\CT04 - Tentar logar sem informar as credenciais.mp4" type="video/mp4"></video>
+        </td>
+      </tr>
+  </tbody>
+</table>
+</div>
+          </div>
+        </li>
+        <li class="test-item"  status="pass" test-id="5"
+          author=""
+          tag=""
+          device="">
+          <div class="test-detail">
+            <p class="name">CT05 - Limpar notificações</p>
+            <p class="text-sm">
+              <span>23:11:15</span> / <span>00:00:08:232</span>
+              <span class="badge pass-bg log float-right">Pass</span>
+            </p>
+          </div>
+          <div class="test-contents d-none">
+<div class="detail-head">
+<div class="p-v-10">
+<div class="info">
+<h5 class="test-status text-pass">CT05 - Limpar notificações</h5>
+<span class='badge badge-success'>07.31.2023 23:11:15</span>
+<span class='badge badge-danger'>07.31.2023 23:11:24</span>
+<span class='badge badge-default'>00:00:08:232</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=5</span>
+<span class='badge badge-default pointer float-right ml-1 et'><i class="fa fa-chevron-down"></i></span>
+<span class='badge badge-default pointer float-right ct'><i class="fa fa-chevron-up"></i></span>
+</div>
+</div>
+</div><div class="detail-body mt-4">
+<table class="table table-sm">
+  <thead><tr><th class="status-col">Status</th><th class="timestamp-col">Timestamp</th><th class="details-col">Details</th></tr></thead>
+  <tbody>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:15</td>
+        <td>
+          ABILITY - Cleo acquired the ability to navigate on mobile device Android
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:22</td>
+        <td>
+          TASK - No notifications to clear
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>23:11:22</td>
+        <td>
+          <span class='badge white-text green'>All assertions are passed. 😊😊😊😊😊</span>
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:24</td>
+        <td>
+          <video width="640" height="360" controls><source src="D:\Cléo\Documents\Java\saucelabs\report\videos\2023-07-31\LoginPageTest\v1\CT05 - Limpar notificações.mp4" type="video/mp4"></video>
+        </td>
+      </tr>
+  </tbody>
+</table>
+</div>
+          </div>
+        </li>
+        <li class="test-item"  status="pass" test-id="6"
+          author=""
+          tag=""
+          device="">
+          <div class="test-detail">
+            <p class="name">CT01 - Verificar o preço do primeiro produto</p>
+            <p class="text-sm">
+              <span>23:11:24</span> / <span>00:00:10:918</span>
+              <span class="badge pass-bg log float-right">Pass</span>
+            </p>
+          </div>
+          <div class="test-contents d-none">
+<div class="detail-head">
+<div class="p-v-10">
+<div class="info">
+<h5 class="test-status text-pass">CT01 - Verificar o preço do primeiro produto</h5>
+<span class='badge badge-success'>07.31.2023 23:11:24</span>
+<span class='badge badge-danger'>07.31.2023 23:11:35</span>
+<span class='badge badge-default'>00:00:10:918</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=6</span>
+<span class='badge badge-default pointer float-right ml-1 et'><i class="fa fa-chevron-down"></i></span>
+<span class='badge badge-default pointer float-right ct'><i class="fa fa-chevron-up"></i></span>
+</div>
+</div>
+</div><div class="detail-body mt-4">
+<table class="table table-sm">
+  <thead><tr><th class="status-col">Status</th><th class="timestamp-col">Timestamp</th><th class="details-col">Details</th></tr></thead>
+  <tbody>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:29</td>
+        <td>
+          ABILITY - Cléo acquired the ability to navigate on mobile device Android
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:31</td>
+        <td>
+          TASK - Cléo typed standard_user in element Username
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:31</td>
+        <td>
+          TASK - Cléo typed secret_sauce in element Password
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:32</td>
+        <td>
+          TASK - Cléo clicked on the element Login
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:33</td>
+        <td>
+          QUESTION - Cléo identified the text '$29.99' in the element Price
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>23:11:33</td>
+        <td>
+          <span class='badge white-text green'>All assertions are passed. 😊😊😊😊😊</span>
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:35</td>
+        <td>
+          <video width="640" height="360" controls><source src="D:\Cléo\Documents\Java\saucelabs\report\videos\2023-07-31\MainPageTest\v1\CT01 - Verificar o preço do primeiro produto.mp4" type="video/mp4"></video>
+        </td>
+      </tr>
+  </tbody>
+</table>
+</div>
+          </div>
+        </li>
+        <li class="test-item"  status="pass" test-id="7"
+          author=""
+          tag=""
+          device="">
+          <div class="test-detail">
+            <p class="name">CT02 - Adicionar produto no carrinho Arrastando e Soltando</p>
+            <p class="text-sm">
+              <span>23:11:35</span> / <span>00:00:07:899</span>
+              <span class="badge pass-bg log float-right">Pass</span>
+            </p>
+          </div>
+          <div class="test-contents d-none">
+<div class="detail-head">
+<div class="p-v-10">
+<div class="info">
+<h5 class="test-status text-pass">CT02 - Adicionar produto no carrinho Arrastando e Soltando</h5>
+<span class='badge badge-success'>07.31.2023 23:11:35</span>
+<span class='badge badge-danger'>07.31.2023 23:11:43</span>
+<span class='badge badge-default'>00:00:07:899</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=7</span>
+<span class='badge badge-default pointer float-right ml-1 et'><i class="fa fa-chevron-down"></i></span>
+<span class='badge badge-default pointer float-right ct'><i class="fa fa-chevron-up"></i></span>
+</div>
+</div>
+</div><div class="detail-body mt-4">
+<table class="table table-sm">
+  <thead><tr><th class="status-col">Status</th><th class="timestamp-col">Timestamp</th><th class="details-col">Details</th></tr></thead>
+  <tbody>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:35</td>
+        <td>
+          ABILITY - Cléo acquired the ability to navigate on mobile device Android
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:36</td>
+        <td>
+          TASK - Cléo typed standard_user in element Username
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:37</td>
+        <td>
+          TASK - Cléo typed secret_sauce in element Password
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:38</td>
+        <td>
+          TASK - Cléo clicked on the element Login
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:41</td>
+        <td>
+          QUESTION - Cléo identified the text '1' in the element Cart Itens
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>23:11:41</td>
+        <td>
+          <span class='badge white-text green'>All assertions are passed. 😊😊😊😊😊</span>
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:43</td>
+        <td>
+          <video width="640" height="360" controls><source src="D:\Cléo\Documents\Java\saucelabs\report\videos\2023-07-31\MainPageTest\v1\CT02 - Adicionar produto no carrinho Arrastando e Soltando.mp4" type="video/mp4"></video>
+        </td>
+      </tr>
+  </tbody>
+</table>
+</div>
+          </div>
+        </li>
+        <li class="test-item"  status="pass" test-id="8"
+          author=""
+          tag=""
+          device="">
+          <div class="test-detail">
+            <p class="name">CT03 - Adicionar produto no carrinho clicando no botão</p>
+            <p class="text-sm">
+              <span>23:11:43</span> / <span>00:00:06:684</span>
+              <span class="badge pass-bg log float-right">Pass</span>
+            </p>
+          </div>
+          <div class="test-contents d-none">
+<div class="detail-head">
+<div class="p-v-10">
+<div class="info">
+<h5 class="test-status text-pass">CT03 - Adicionar produto no carrinho clicando no botão</h5>
+<span class='badge badge-success'>07.31.2023 23:11:43</span>
+<span class='badge badge-danger'>07.31.2023 23:11:50</span>
+<span class='badge badge-default'>00:00:06:684</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=8</span>
+<span class='badge badge-default pointer float-right ml-1 et'><i class="fa fa-chevron-down"></i></span>
+<span class='badge badge-default pointer float-right ct'><i class="fa fa-chevron-up"></i></span>
+</div>
+</div>
+</div><div class="detail-body mt-4">
+<table class="table table-sm">
+  <thead><tr><th class="status-col">Status</th><th class="timestamp-col">Timestamp</th><th class="details-col">Details</th></tr></thead>
+  <tbody>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:43</td>
+        <td>
+          ABILITY - Cléo acquired the ability to navigate on mobile device Android
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:44</td>
+        <td>
+          TASK - Cléo typed standard_user in element Username
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:45</td>
+        <td>
+          TASK - Cléo typed secret_sauce in element Password
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:46</td>
+        <td>
+          TASK - Cléo clicked on the element Login
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:47</td>
+        <td>
+          TASK - Cléo clicked on the element Cart Add Button
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:48</td>
+        <td>
+          QUESTION - Cléo identified the text '1' in the element Cart Itens
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>23:11:48</td>
+        <td>
+          <span class='badge white-text green'>All assertions are passed. 😊😊😊😊😊</span>
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:50</td>
+        <td>
+          <video width="640" height="360" controls><source src="D:\Cléo\Documents\Java\saucelabs\report\videos\2023-07-31\MainPageTest\v1\CT03 - Adicionar produto no carrinho clicando no botão.mp4" type="video/mp4"></video>
+        </td>
+      </tr>
+  </tbody>
+</table>
+</div>
+          </div>
+        </li>
+        <li class="test-item"  status="pass" test-id="9"
+          author=""
+          tag=""
+          device="">
+          <div class="test-detail">
+            <p class="name">CT04 - Scrollar até o produto Sauce Labs Onesie estar visível</p>
+            <p class="text-sm">
+              <span>23:11:50</span> / <span>00:00:09:866</span>
+              <span class="badge pass-bg log float-right">Pass</span>
+            </p>
+          </div>
+          <div class="test-contents d-none">
+<div class="detail-head">
+<div class="p-v-10">
+<div class="info">
+<h5 class="test-status text-pass">CT04 - Scrollar até o produto Sauce Labs Onesie estar visível</h5>
+<span class='badge badge-success'>07.31.2023 23:11:50</span>
+<span class='badge badge-danger'>07.31.2023 23:11:59</span>
+<span class='badge badge-default'>00:00:09:866</span>
+&middot; <span class='uri-anchor badge badge-default'>#test-id=9</span>
+<span class='badge badge-default pointer float-right ml-1 et'><i class="fa fa-chevron-down"></i></span>
+<span class='badge badge-default pointer float-right ct'><i class="fa fa-chevron-up"></i></span>
+</div>
+</div>
+</div><div class="detail-body mt-4">
+<table class="table table-sm">
+  <thead><tr><th class="status-col">Status</th><th class="timestamp-col">Timestamp</th><th class="details-col">Details</th></tr></thead>
+  <tbody>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:50</td>
+        <td>
+          ABILITY - Cléo acquired the ability to navigate on mobile device Android
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:51</td>
+        <td>
+          TASK - Cléo typed standard_user in element Username
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:52</td>
+        <td>
+          TASK - Cléo typed secret_sauce in element Password
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:52</td>
+        <td>
+          TASK - Cléo clicked on the element Login
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:57</td>
+        <td>
+          QUESTION - Cléo verified that element Sauce Labs Onesie is visible
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log pass-bg">Pass</span></td>
+        <td>23:11:57</td>
+        <td>
+          <span class='badge white-text green'>All assertions are passed. 😊😊😊😊😊</span>
+        </td>
+      </tr>
+      <tr class="event-row">
+        <td><span class="badge log info-bg">Info</span></td>
+        <td>23:11:59</td>
+        <td>
+          <video width="640" height="360" controls><source src="D:\Cléo\Documents\Java\saucelabs\report\videos\2023-07-31\MainPageTest\v1\CT04 - Scrollar até o produto Sauce Labs Onesie estar visível.mp4" type="video/mp4"></video>
+        </td>
+      </tr>
+  </tbody>
+</table>
+</div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+<div class="test-content scrollable">
+<div class="test-content-tools">
+<ul><li><a class="back-to-test" href="#"><i class="fa fa-arrow-left"></i></a></li></ul>
+</div>
+<div class="test-content-detail"><div class="detail-body"></div></div>
+</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+<script src="https://cdn.jsdelivr.net/gh/extent-framework/extent-github-cdn@d6562a79075e061305ccfdb82f01e5e195e2d307/spark/js/spark-script.js"></script>
+<script type="text/javascript">document.querySelector('link[rel="shortcut icon"]').href = "https://raw.githubusercontent.com/CleoCordeiro/ScreemPlayLogo/c25f39846be3508911f8d44768eab788bee87b9c/Logo.png";document.querySelector('link[rel="apple-touch-icon"]').href = "https://raw.githubusercontent.com/CleoCordeiro/ScreemPlayLogo/c25f39846be3508911f8d44768eab788bee87b9c/Logo.png";document.querySelector('.logo').style.backgroundImage = "url('https://raw.githubusercontent.com/CleoCordeiro/ScreemPlayLogo/c25f39846be3508911f8d44768eab788bee87b9c/Logo.png')"</script></body>
+</html>
