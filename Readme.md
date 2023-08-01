@@ -526,8 +526,6 @@ A captura do screenshot é executada chamando o método `perform(MobileUser mobi
 ##### Exemplo de Uso
 
 ```java
-MobileUser mobileUser = MobileUser.name("Cléo");
-
 @Test
 void Tirar_Uma_Screenshot_Da_Pagina_De_Detalhes_Do_Produto() {
     // Abrindo o aplicativo diretamente na tela de detalhes do produto usando o  deeplink
@@ -585,7 +583,6 @@ Aqui está um exemplo completo de uso da classe `ScrollTo`:
 
 ```java
 @Test
-@DisplayName("CT01 - Scrollar até o produto Sauce Labs Onesie estar visível")
 void Scrollar_Ate_O_Produto_Sauce_Labs_Onesie_Estar_Visivel() {
     
     // Utilizando a tarefa Login para realizar o login, faz todo o processo de login
@@ -630,8 +627,8 @@ A espera pela visibilidade do elemento é executada chamando o método `perform(
 ```java
 @Test
 void Esperar_Pela_Visibilidade_Do_Botao_De_Login() {
-MobileUser mobileUser = MobileUser.name("Cléo");
-mobileUser.attemptsTo(WaitFor.element(LoginPage.login));
+  MobileUser mobileUser = MobileUser.name("Cléo");
+  mobileUser.attemptsTo(WaitFor.element(LoginPage.login));
 }
 ```
 
