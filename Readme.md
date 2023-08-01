@@ -337,7 +337,9 @@ void Limpar_Notificacoes(){
 }
 ```
 
-<video src="assets/ClearNotifications.mp4" controls title="ClearNotifications"></video>
+
+https://github.com/CleoCordeiro/saucelabs-screemplay/assets/75858274/dd2604ab-aa75-49c5-b885-c03a11fcc14b
+
 
 Neste exemplo, as notificações do dispositivo móvel serão limpas.
 
@@ -365,11 +367,16 @@ Aqui está um exemplo completo de uso da classe `Click`:
 ```java
 @Test
 void Login_Sem_Informar_Credenciais() {
-    MobileUser mobileUser = MobileUser.name("Cleo");
-    //Clica no elemento localizado por LoginPage.login
+    // Clica no botão "LOGIN"
     mobileUser.attemptTo(Click.on(LoginPage.login));
+
+     // Verifica se a mensagem de erro está visível, se não estiver, o teste falha
+    mobileUser.shouldSeeThat(IsVisible.of(LoginPage.errorMessage));
 }
 ```
+
+
+https://github.com/CleoCordeiro/saucelabs-screemplay/assets/75858274/5a1a56aa-4314-43b0-8886-e52813e65e82
 
 <video src="assets/ClickElement.mp4" controls title="ClickElement"></video>
 
@@ -396,13 +403,23 @@ O `DragAndDrop` é executado chamando o método `perform(MobileUser mobileUser)`
 
 ```java
 @Test
-void Arrastar_E_Soltar_O_Produto_No_Carrinho() {
-    MobileUser mobileUser = MobileUser.name("Cléo");
+void Adicionar_Produto_No_Carrinho_Arrastando_E_Soltando() {
+    // Utilizando a tarefa Login para realizar o login, faz todo o processo de login
     mobileUser.attemptTo(Login.withCredentials("standard_user", "secret_sauce"));
-    //Arrasta o elemento representado por MainPage.dragCart para a posição do elemento representado por MainPage.productsTitleLabel
+
+    // Arrasta o elemento "dragCart" e solta no elemento "productsTitleLabel"
     mobileUser.attemptTo(DragAndDrop.from(MainPage.dragCart).to(MainPage.productsTitleLabel));
+
+    // Verifica se o texto do elemento "cartItens" contém o texto "1", se não
+    // contiver, o teste falha
+    mobileUser.shouldSeeThat(ContainsText.of(MainPage.cartItens, "1"));
 }
 ```
+
+
+https://github.com/CleoCordeiro/saucelabs-screemplay/assets/75858274/5b011654-ace5-496f-85fc-b8fc3be6e931
+
+
 <video src="assets/DragAndDrop.mp4" controls title="DragAndDrop"></video>
 
 Neste exemplo, a ação de arrastar o elemento representado pelo localizador `MainPage.dragCart` para a posição do elemento representado pelo localizador `MainPage.productsTitleLabel` será realizada.
@@ -430,12 +447,25 @@ Aqui está um exemplo completo de uso da classe `InputText`:
 ```java
 @Test
 void Login_Com_Credenciais_Validas_Usando_InputText() {
-    MobileUser mobileUser = MobileUser.name("Cléo");
-    mobileUser.attemptTo(InputText.onField("standard_user", LoginPage.username));
-    mobileUser.attemptTo(InputText.onField("secret_sauce", LoginPage.password));
-    }
+
+    // Insere o texto "standard_user" no campo "standard_user"
+    mobileUser.attemptTo(InputText.onField( LoginPage.username, "standard_user"));
+
+    // Insere o texto "secret_sauce" no campo "secret_sauce"
+    mobileUser.attemptTo(InputText.onField( LoginPage.password, "secret_sauce"));
+
+    // Clica no botão "LOGIN"
+    mobileUser.attemptTo(Click.on(LoginPage.login));
+
+    // Verifica se o título da página "PRODUCTS" está visível, se não estiver, o teste falha
+    mobileUser.shouldSeeThat(IsVisible.of(MainPage.productsTitleLabel));
+}
 ```
+
+https://github.com/CleoCordeiro/saucelabs-screemplay/assets/75858274/62ef46b7-bb2a-4a83-a026-d1587bf5c084
+
 <video src="assets/ImputText.mp4" controls title="ImputText"></video>
+
 
 Neste exemplo, o texto "standard_user" será inserido no campo de texto representado pelo localizador `LoginPage.username` e o texto "secret_sauce" será inserido no campo de texto representado pelo localizador `LoginPage.password`.
 
@@ -459,10 +489,20 @@ A abertura do deeplink é executada chamando o método `perform(MobileUser mobil
 ```java
 @Test
 void DeepLink_Para_O_Primeiro_Produto() {
-    MobileUser mobileUser = MobileUser.name("Cléo");
+    // Abrindo o aplicativo diretamente na tela de detalhes do produto usando o
+    // deeplink
     mobileUser.attemptTo(OpenDeepLink.with("swaglabs://swag-item/0"));
+
+    // Verifica se o botão "Back to Products" está visível
+    mobileUser.shouldSeeThat(IsVisible.of(DetailsProductPage.backToProducts));
 }
 ```
+
+
+
+https://github.com/CleoCordeiro/saucelabs-screemplay/assets/75858274/f43683bf-6bcf-4fca-ac58-1f1321736782
+
+
 <video src="assets/DeepLink.mp4" controls title="DeepLink"></video>
 
 Neste exemplo, a ação de abrir o deeplink "swaglabs://swag-item/0" será realizada no aplicativo móvel, direcionando para a tela do primeiro produto.
@@ -490,12 +530,22 @@ MobileUser mobileUser = MobileUser.name("Cléo");
 
 @Test
 void Tirar_Uma_Screenshot_Da_Pagina_De_Detalhes_Do_Produto() {
+    // Abrindo o aplicativo diretamente na tela de detalhes do produto usando o  deeplink
     mobileUser.attemptTo(OpenDeepLink.with("swaglabs://swag-item/0"));
-    Boolean isVisible = mobileUser.ask(Visibility.of(DetailsProductPage.backToProducts));
+
+    // Verifica se o botão "Back to Products" está visível
+    mobileUser.shouldSeeThat(IsVisible.of(DetailsProductPage.backToProducts));
+
+    // Tira uma screenshot da tela de detalhes do produto
     mobileUser.attemptTo(ScreenShot.take("detailsProductPage"));
 }
-
 ```
+
+
+https://github.com/CleoCordeiro/saucelabs-screemplay/assets/75858274/f0876b57-9d2b-438f-94cf-221f386e1c21
+
+
+
 <video src="assets/Screenshot.mp4" controls title="Screenshot"></video>
 
 Neste exemplo, a tarefa `ScreenShot` tirará um screenshot da tela do aplicativo móvel com o nome "detailsProductPage" e salvará a imagem no diretório "report/screenshots/" com a extensão ".png".
@@ -536,21 +586,28 @@ Aqui está um exemplo completo de uso da classe `ScrollTo`:
 ```java
 @Test
 @DisplayName("CT01 - Scrollar até o produto Sauce Labs Onesie estar visível")
-void scrollToElement(){
+void Scrollar_Ate_O_Produto_Sauce_Labs_Onesie_Estar_Visivel() {
+    
+    // Utilizando a tarefa Login para realizar o login, faz todo o processo de login
     mobileUser.attemptTo(Login.withCredentials("standard_user", "secret_sauce"));
+
+    // Scrolla até o elemento "sauceLabsOnesie" estar visível
     mobileUser.attemptTo(ScrollTo.up().distance(1000).atLocator(MainPage.sauceLabsOnesie));
-    Boolean isVisible = mobileUser.ask(Visibility.of(MainPage.sauceLabsOnesie));
-    Assertions.assertTrue(isVisible, "The product page is not visible");
+
+    // Verifica se o elemento "sauceLabsOnesie" está visível, se não estiver, o
+    // teste falha
+    mobileUser.shouldSeeThat(IsVisible.of(MainPage.sauceLabsOnesie));
 
 }
 ```
+
+https://github.com/CleoCordeiro/saucelabs-screemplay/assets/75858274/c4d4c811-eb79-4240-a807-693e3cd6af1f
+
 <video src="assets/ScrollToElement.mp4" controls title="ScrollToElement"></video>
 
 Neste exemplo, o scroll será realizado para cima até que o elemento representado pelo localizador `MainPage.sauceLabsOnesie` esteja visível. A distância percorrida pelo scroll será de 1000 pixels a cada iteração.
 
 O `ScrollTo` é útil para interações mais complexas em aplicações móveis, permitindo que você role a tela para visualizar elementos que não estão imediatamente visíveis.
-
-
 
 
 #### 🎯 Task - WaitFor
